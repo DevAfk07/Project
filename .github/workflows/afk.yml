@@ -1,4 +1,4 @@
-name: AFK Page Keeper
+name: Keep Page Open AFK
 
 on:
   schedule:
@@ -18,8 +18,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Puppeteer (latest stable)
-        run: npm install puppeteer@24
+      - name: Install dependencies
+        run: npm install
+
+      - name: List root files
+        run: ls -la
 
       - name: Run AFK script
         run: node keepPageOpen.js
