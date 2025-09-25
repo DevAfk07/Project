@@ -18,11 +18,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Puppeteer
-        run: npm install puppeteer
+      - name: Install Puppeteer (latest stable)
+        run: npm install puppeteer@24
 
       - name: Run AFK script
-        env:
-          USERNAME: ${{ secrets.WEBSITE_USERNAME }}
-          PASSWORD: ${{ secrets.WEBSITE_PASSWORD }}
         run: node keepPageOpen.js
