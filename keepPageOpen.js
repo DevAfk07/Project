@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-  const browser = await puppeteer.launch({ 
+  const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
@@ -9,29 +9,35 @@ const puppeteer = require('puppeteer');
   const page = await browser.newPage();
 
   try {
-    // Login page
+    // Login
     await page.goto(
-      'https://billing.freeminecrafthost.com/auth/login?r=https://billing.freeminecrafthost.com/dashboard', 
+      'https://billing.freeminecrafthost.com/auth/login?r=https://billing.freeminecrafthost.com/dashboard',
       { waitUntil: 'networkidle2' }
     );
 
-    // Login karna
-    await page.type('#inputEmail', 'DevVmos');        // Username field
-    await page.type('#inputPassword', '357159258');   // Password field
-    await page.click('button[type="submit"]');        // Login button
-
+    await page.type('#inputEmail', 'DevVmos');
+    await page.type('#inputPassword', '357159258');
+    await page.click('button[type="submit"]');
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
     // AFK page
     await page.goto('https://billing.freeminecrafthost.com/earn/coins', { waitUntil: 'networkidle2' });
     console.log('AFK page open!');
 
-    // AFK mode: Page ko 5 ghante ke liye open rakhe
-    await page.waitForTimeout(5 * 60 * 60 * 1000);
+    // **Periodic refresh / interaction**
+    setInterval(async () => {
+      try {
+        await page.reload({ waitUntil: 'networkidle2' });
+        console.log('AFK page refreshed!');
+        // Agar coins collect karne ka button hai, yaha click karwa do
+        // await page.click('#collectCoinsButton');
+      } catch (err) {
+        console.error('Error during refresh:', err);
+      }
+    }, 10 * 60 * 1000); // har 10 minute refresh
 
   } catch (err) {
     console.error('Error:', err);
-  } finally {
-    await browser.close();
   }
+
 })();
