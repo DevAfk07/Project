@@ -3,26 +3,19 @@ name: Keep Page Open AFK
 on:
   schedule:
     - cron: '0 */5 * * *'  # Har 5 ghante run
-  workflow_dispatch:        # Manual trigger ka option
+  workflow_dispatch:
 
 jobs:
   keep-page-open:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm install
 
-      - name: List root files
-        run: ls -la
-
-      - name: Run AFK script
-        run: node keepPageOpen.js
+      - run: node keepPageOpen.js
