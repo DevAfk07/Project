@@ -1,0 +1,12 @@
+{
+  "name": "afk-page-keeper",
+  "version": "1.0.0",
+  "description": "Keeps a page open AFK using Puppeteer in GitHub Actions",
+  "main": "keepPageOpen.js",
+  "scripts": {
+    "start": "node keepPageOpen.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  }
+}
