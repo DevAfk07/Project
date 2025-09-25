@@ -1,12 +1,19 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ 
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+
   const page = await browser.newPage();
 
   try {
     // Login page
-    await page.goto('https://billing.freeminecrafthost.com/auth/login?r=https://billing.freeminecrafthost.com/dashboard', { waitUntil: 'networkidle2' });
+    await page.goto(
+      'https://billing.freeminecrafthost.com/auth/login?r=https://billing.freeminecrafthost.com/dashboard', 
+      { waitUntil: 'networkidle2' }
+    );
 
     // Login karna
     await page.type('#inputEmail', 'DevVmos');        // Username field
@@ -19,7 +26,7 @@ const puppeteer = require('puppeteer');
     await page.goto('https://billing.freeminecrafthost.com/earn/coins', { waitUntil: 'networkidle2' });
     console.log('AFK page open!');
 
-    // 5 ghante ke liye AFK mode
+    // AFK mode: Page ko 5 ghante ke liye open rakhe
     await page.waitForTimeout(5 * 60 * 60 * 1000);
 
   } catch (err) {
